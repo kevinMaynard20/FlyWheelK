@@ -7,12 +7,15 @@
 
 package frc.robot;
 
+import java.io.FileWriter;
+
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.FlywheelConstants;
 import frc.robot.Constants.ControllerConstants.*;
-import frc.robot.commands.drivetraincommands.ArcadeDriveCommand;
+import frc.robot.commands.DrivetrainCommands.ArcadeDriveCommand;
+import frc.robot.commands.WriteTextCommands.TextWriterCommand;
 import frc.robot.commands.limelightcommands.LimelightTargetCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -25,6 +28,8 @@ public class RobotContainer {
 	private final FlywheelSubsystem m_flywheel = new FlywheelSubsystem();
 	private final LimelightSubsystem m_limelight = new LimelightSubsystem();
 	private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
+	private final DateTimeSubsystem m_date = new DateTimeSubsystem();
+	private final FileWriterSubsystem m_file=  new FileWriterSubsystem();
 
 	public RobotContainer() {
 		configureButtonBindings();
@@ -60,6 +65,16 @@ public class RobotContainer {
 		// Limelight
 		new JoystickButton(m_driverController, Button.kTrackpad)
 				.whenPressed(new LimelightTargetCommand(m_limelight, m_drivetrain));
+		
+		// Textwriter
+		new JoystickButton(m_driverController, Button.kX)
+		.and(new POVButton(m_driverController, DPad.kDown)).whenActive(new TextWriterCommand(m_date, m_file, m_limelight, m_flywheel, 3)); 
+		new JoystickButton(m_driverController, Button.kX)
+		.and(new POVButton(m_driverController, DPad.kLeft)).whenActive(new TextWriterCommand(m_date, m_file, m_limelight, m_flywheel, 1)); 
+		new JoystickButton(m_driverController, Button.kX)
+		.and(new POVButton(m_driverController, DPad.kRight)).whenActive(new TextWriterCommand(m_date, m_file, m_limelight, m_flywheel, 2)); 
+		new JoystickButton(m_driverController, Button.kX)
+		.and(new POVButton(m_driverController, DPad.kUp)).whenActive(new TextWriterCommand(m_date, m_file, m_limelight, m_flywheel, 0)); 
 	}
 
 	public Command getAutonomousCommand() {
