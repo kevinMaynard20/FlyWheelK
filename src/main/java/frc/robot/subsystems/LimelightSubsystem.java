@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSubsystem extends SubsystemBase {
 
+    
     private final NetworkTable m_limelightTable;
 
     public LimelightSubsystem() {
@@ -24,6 +25,14 @@ public class LimelightSubsystem extends SubsystemBase {
         return m_limelightTable.getEntry("ty").getDouble(0);
     }
 
+    public double estimatedDistance(){
+        return CONVERSION_TA * (m_limelightTable.getEntry("ta").getDouble(0));
+    }
+
+    public double calculatedDistance(){
+        return HEIGHT_FT / Math.sin(m_limelightTable.getEntry("ty").getDouble(0));
+    }
+
     public void turnOnLight() {
         m_limelightTable.getEntry("ledmode").setNumber(1);
     }
@@ -31,4 +40,6 @@ public class LimelightSubsystem extends SubsystemBase {
     public void turnOffLight() {
         m_limelightTable.getEntry("ledmode").setNumber(0);
     }
+
+    
 }

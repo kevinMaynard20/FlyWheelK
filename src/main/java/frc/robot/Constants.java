@@ -34,6 +34,8 @@ public final class Constants {
         public static final double kTurnP = .05;
         public static final double kTurnI = .008;
         public static final double kTurnD = .002;
+        public static final double HEIGHT_FT = 8;
+        public static final double CONVERSION_TA = 0;
     }
 
     public static final class ControllerConstants {
@@ -70,5 +72,6 @@ public final class Constants {
             public static final int kDown = 180;
             public static final int kLeft = 270;
         }
+
     }
 }
